@@ -1,0 +1,127 @@
+{
+  "organization": {
+    "name": "Some Cool Organization",
+    "quorum": 0.60,
+    "members": [
+      {
+        "id": 0,
+        "name": "Scott Johnson"
+      },
+      {
+        "id": 1,
+        "name": "John Smith"
+      },
+      {
+        "id": 2,
+        "name": "Mike Anderson"
+      },
+      {
+        "id": 3,
+        "name": "Carol Stellen"
+      },
+      {
+        "id": 4,
+        "name": "Trish Calley"
+      }
+    ],
+    "officers": [
+      {
+        "name": "Chairman",
+        "holder": 3
+      },
+      {
+        "name": "Vice Chairman",
+        "holder": 0
+      },
+      {
+        "name": "Secretary",
+        "holder": 1
+      },
+      {
+        "name": "Treasurer",
+        "holder": null
+      }
+    ]
+  },
+
+  "agenda": {
+    "sections": [
+      {
+        "name": "Approval of Minutes"
+      },
+      {
+        "name": "Officer Reports",
+        "items": [
+          "Chairman",
+          "Vice Chairman",
+          "Secretary"
+        ]
+      },
+      {
+        "name": "Old Business",
+        "items": null
+      },
+      {
+        "name": "New Business",
+        "items": [
+          "Election of New Treasurer"
+        ]
+      }
+    ]
+  },
+
+  "scheduledStartTime": "2017-04-29T23:00",
+  "calledToOrder": "2017-04-29T23:02",
+  "adjourned": "2017-04-30T03:14",
+  "attendance": {
+      "present": [
+        0, 1, 3, 4
+      ],
+      "absentExcused": [
+        2
+      ]
+  },
+
+  "timeline": [
+    {
+      "containingSection": 0,
+      "type": "motion",
+      "user": 3,
+      "description": "C. Stellen moved to approve minutes from previous meeting.",
+      "withoutObjection": true,
+      "vote": {
+        "numFor": 4,
+        "numAgainst": 0,
+        "numAbstaining": 0
+      }
+    },
+    {
+      "containingSection": 1,
+      "type": "report",
+      "user": 3,
+      "report": "C. Stellen had no report."
+    },
+    {
+      "containingSection": 1,
+      "type": "report",
+      "user": 0,
+      "report": "S. Johnson reported that the investigation into the website malfunction has progressed smoothly. S. Johnson states that the website was down for approximately 45 minutes, which was significantly less than was previously estimated. The firm responsible for hosting the website has agreed to give the organization money back for the time lost, and has put a plan in place to prevent future loss of revenue from occurring.",
+      "discussion": [
+        {
+          "user": 4,
+          "content": "T. Calley asked S. Johnson if the website was down currently."
+        },
+        {
+          "user": 0,
+          "content": "S. Johnson responded that it was not currently down to his knowledge. He also commented that there have been alerts put in place to detect if the website goes down again."
+        }
+      ]
+    },
+    {
+      "containingSection": 1,
+      "type": "report",
+      "user": 1,
+      "report": "J. Smith had no report."
+    }
+  ]
+}

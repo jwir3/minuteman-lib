@@ -1,0 +1,44 @@
+{
+  "name": "Some Cool Organization",
+  "quorum": 0.60,
+  "members": [
+    {
+      "id": 0,
+      "name": "Scott Johnson"
+    },
+    {
+      "id": 1,
+      "name": "John Smith"
+    },
+    {
+      "id": 2,
+      "name": "Mike Anderson"
+    },
+    {
+      "id": 3,
+      "name": "Carol Stellen"
+    },
+    {
+      "id": 4,
+      "name": "Trish Calley"
+    }
+  ],
+  "officers": [
+    {
+      "name": "Chairman",
+      "holder": 3
+    },
+    {
+      "name": "Vice Chairman",
+      "holder": 0
+    },
+    {
+      "name": "Secretary",
+      "holder": 1
+    },
+    {
+      "name": "Treasurer",
+      "holder": null
+    }
+  ]
+}
