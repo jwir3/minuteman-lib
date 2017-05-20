@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-let fixtures = [];
+export let fixtures = [];
 
 class Fixture {
     constructor(jsonData) {
@@ -27,5 +27,3 @@ function loadFixtureFile(filePath) {
   let stringContents = fs.readFileSync(filePath);
   fixtures[baseName] = new Fixture(stringContents);
 }
-
-module.exports = fixtures;

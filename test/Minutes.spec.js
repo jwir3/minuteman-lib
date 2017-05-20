@@ -1,7 +1,8 @@
 import { should, expect } from 'chai';
 import Minutes from '../src/Minutes';
+// import { Minutes } from '../dist/minuteman-lib';
 import moment from 'moment';
-import fixtures from './FixtureHelper';
+import {fixtures} from './FixtureHelper';
 
 should();
 
