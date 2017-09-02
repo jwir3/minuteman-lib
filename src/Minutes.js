@@ -1,14 +1,27 @@
 'use strict';
 
 import moment from 'moment';
+import Agenda from './Agenda';
 
 /**
  * An object representing the minutes from a real-world meeting that either took
  * place in the past, or is taking place now.
  */
 export default class Minutes {
-  constructor(scheduledStartTime) {
-    this.scheduledStartTime = moment(scheduledStartTime);
+  constructor(aAgenda) {
+    this.mAgenda = aAgenda;
+  }
+
+  get agenda() {
+    return this.mAgenda;
+  }
+
+  set agenda(aAgenda) {
+    this.mAgenda = aAgenda;
+  }
+
+  hasAgenda() {
+    return this.mAgenda !== null;
   }
 
   get calledToOrderTime() {
@@ -28,19 +41,15 @@ export default class Minutes {
   }
 
   get scheduledStartTime() {
-    return this.meetingScheduledTime;
-  }
-
-  set scheduledStartTime(time) {
-    if (time != null) {
-      this.meetingScheduledTime = time;
-    } else {
-      this.meetingScheduledTime = moment();
+    if (this.hasAgenda()) {
+      return this.mAgenda.scheduledStartTime;
     }
+
+    return null;
   }
 
   get scheduledStartTimeAsString() {
-    return Minutes.formatDateTime(this.meetingScheduledTime);
+    return Minutes.formatDateTime(this.scheduledStartTime);
   }
 
   wasCalledToOrderAndAdjournedOnTheSameDay() {
@@ -74,7 +83,7 @@ export default class Minutes {
       throw ("Unable to format a null date/time");
     }
 
-    return dateTime.format('MMMM D, YYYY hh:mma');
+    return dateTime.format('MMMM DD, YYYY hh:mma');
   }
 
   hasBeenCalledToOrder() {
@@ -107,7 +116,12 @@ export default class Minutes {
 
   static parse(minutesJson) {
     var obj = JSON.parse(minutesJson);
-    var newObj = new Minutes(obj.scheduledStartTime);
+    var newAgenda = null;
+    if (obj.agenda !== null) {
+      newAgenda = new Agenda(obj.agenda);
+    }
+
+    var newObj = new Minutes(newAgenda);
     if (obj.calledToOrder) {
       newObj.calledToOrderTime = moment(obj.calledToOrder);
     }

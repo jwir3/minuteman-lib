@@ -24,7 +24,7 @@ describe('Agenda Deserialization', () => {
       agenda.should.exist;
       agenda.title.should.equal('Meeting of the Minds');
       agenda.location.should.equal('123 Anywhere St. Rm 302, Rosemount, MN 55068');
-      agenda.scheduledStartTime.should.equal('2017-07-20T19:00');
+      agenda.scheduledStartTimeAsString.should.equal('2017-07-20T19:00');
     }
   );
 });
