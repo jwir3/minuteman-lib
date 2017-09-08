@@ -10,6 +10,14 @@ describe('Minutes', () => {
     it('should throw an exception if we attempt to format a null scheduled start time', () => {
       expect(() => { Minutes.formatDateTime(null) }).to.throw('Unable to format a null date/time');
     });
+
+    it ('should be able to serialize back to a string', () => {
+      var basicMinutes = fixtures['BasicMinutes'].rawObject;
+      basicMinutes.should.exist;
+
+      var unspacedJson = JSON.stringify(JSON.parse(fixtures['BasicMinutes'].json.toString('utf-8')));
+      JSON.stringify(basicMinutes).should.equal(unspacedJson);
+    });
   });
 
   describe('basic constructor', () => {

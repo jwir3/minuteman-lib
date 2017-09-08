@@ -9,19 +9,19 @@ import Agenda from './Agenda';
  */
 export default class Minutes {
   constructor(aAgenda) {
-    this.mAgenda = aAgenda;
+    this.agenda = aAgenda;
   }
 
-  get agenda() {
-    return this.mAgenda;
+  get meetingAgenda() {
+    return this.agenda;
   }
 
-  set agenda(aAgenda) {
-    this.mAgenda = aAgenda;
+  set meetingAgenda(aAgenda) {
+    this.agenda = aAgenda;
   }
 
   hasAgenda() {
-    return this.mAgenda !== null;
+    return this.meetingAgenda && this.meetingAgenda !== null;
   }
 
   get calledToOrderTime() {
@@ -42,7 +42,7 @@ export default class Minutes {
 
   get scheduledStartTime() {
     if (this.hasAgenda()) {
-      return this.mAgenda.scheduledStartTime;
+      return this.meetingAgenda.scheduledStartTime;
     }
 
     return null;

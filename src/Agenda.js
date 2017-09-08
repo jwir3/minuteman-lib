@@ -4,30 +4,22 @@ import moment from 'moment';
 
 export default class Agenda {
   constructor (aSerializedData) {
+    this.scheduledStartTime = null;
+    this.title = null;
+    this.location = null;
+
     if (aSerializedData != null) {
       this.deserialize(aSerializedData);
     }
   }
 
-  get title() {
-    return this.mTitle;
-  }
-
-  get scheduledStartTime() {
-    return this.mScheduledStartTime;
-  }
-
   get scheduledStartTimeAsString() {
-    return this.mScheduledStartTime.format('YYYY-MM-DD[T]HH:mm');
-  }
-
-  get location() {
-    return this.mLocation;
+    return this.scheduledStartTime.format('YYYY-MM-DD[T]HH:mm');
   }
 
   deserialize(aData) {
-    this.mScheduledStartTime = moment(aData.scheduledStartTime);
-    this.mTitle = aData.title;
-    this.mLocation = aData.location;
+    this.scheduledStartTime = moment(aData.scheduledStartTime);
+    this.title = aData.title;
+    this.location = aData.location;
   }
 }
