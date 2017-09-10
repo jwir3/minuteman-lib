@@ -87,7 +87,7 @@ export default class Minutes {
   }
 
   hasBeenCalledToOrder() {
-    return this.calledToOrder != null;
+    return this.calledToOrderTime != null;
   }
 
   hasBeenAdjourned() {
@@ -96,7 +96,7 @@ export default class Minutes {
 
   callToOrder() {
     if (this.hasBeenCalledToOrder()) {
-      throw('Meeting has already been called to order');
+      throw ('Meeting has already been called to order');
     }
 
     this.calledToOrderTime = moment();
