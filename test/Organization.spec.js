@@ -1,5 +1,6 @@
 import { should, expect } from 'chai';
 import Organization from '../src/Organization';
+import OrganizationRegistry from '../src/OrganizationRegistry';
 import Member from '../src/Member';
 // import { Member, Organization } from '../dist/minuteman-lib';
 import moment from 'moment';
@@ -9,16 +10,22 @@ should();
 
 describe ('Organization', () => {
   describe ('basic object manipulation', () => {
-    it ('should allow construction', () => {
-      var newOrg = new Organization('Something', 0.2);
-      newOrg.should.exist;
+    it ('should automatically deserialize if a parameter is passed to constructor',
+      () => {
+        var org = new Organization(fixtures['BasicOrganization'].rawObject);
 
-      newOrg.name.should.equal('Something');
-      newOrg.quorum.should.equal(0.2);
-    });
+        org.should.exist;
+        org.name.should.equal('Some Cool Organization');
+        org.id.should.equal(1);
+      }
+    );
 
     it ('should throw an exception if an invalid quorum value is specified', () => {
-      var newOrg = new Organization('Something', 0.2);
+      var newOrg = new Organization({
+        "id": 31,
+        "name": 'Something',
+        "quorum": 0.2
+      });
       newOrg.should.exist;
 
       expect(() => { newOrg.quorum = -1.0; }).to.throw('it is not possible to have a quorum except between 0.0 and 1.0');
@@ -27,7 +34,12 @@ describe ('Organization', () => {
     });
 
     it ('should allow the addition of new members, provided they are defined', () => {
-      var newOrg = new Organization('Something', 0.2);
+      var newOrg = new Organization({
+        "id": 31,
+        "name": 'Something',
+        "quorum": 0.2
+      });
+
       newOrg.should.exist;
 
       var member = null;
@@ -49,23 +61,31 @@ describe ('Organization', () => {
   });
 
   describe ('fixture data', () => {
-    it ('should load the BasicOrganization fixture', () => {
-      var orgFixture = fixtures['BasicOrganization'];
-      orgFixture.should.exist;
-
-      var rawObject = orgFixture.rawObject;
-      rawObject.should.exist;
-      rawObject.quorum.should.equal(0.60);
-      rawObject.name.should.equal('Some Cool Organization');
-    });
-
     it ('should parse organization objects from fixture data', () => {
-      var orgFixture = fixtures['BasicOrganization'];
-      orgFixture.should.exist;
-
-      var org = Organization.parse(orgFixture.json);
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
       org.name.should.equal('Some Cool Organization');
       org.quorum.should.equal(0.6);
+      org.id.should.equal(1);
+    });
+  });
+
+  describe ('organization registry', () => {
+    it ('should not return a null organization if an unregistered id is given', () => {
+      var org = OrganizationRegistry.findById(36);
+
+      expect(!org).to.be.truthy;
+    });
+
+    it ('should allow the lookup of an organization by id', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+      org.should.exist;
+      org = null;
+      org = OrganizationRegistry.findById(1);
+
+      org.should.exist;
+      org.id.should.equal(1);
+      org.quorum.should.equal(0.6);
+      org.name.should.equal('Some Cool Organization');
     });
   });
 });

@@ -1,0 +1,68 @@
+{
+  "scheduledStartTime": "2017-07-20T19:00",
+  "title": "Meeting of the Minds",
+  "location": "123 Anywhere St. Rm 302, Rosemount, MN 55068",
+  "organization": 1,
+  "expectedMembers": [0, 1, 2, 3, 4],
+  "sections": [
+    {
+      "title": "Call to Order",
+      "type": "callToOrder"
+    },
+    {
+      "title": "Approval of Minutes",
+      "type": "minutesApproval"
+    },
+    {
+      "title": "Recognition of New Members",
+      "type": "other"
+    },
+    {
+      "title": "Officer Reports",
+      "type": "reports",
+      "hasSubsections": true,
+      "subsections": [
+        {
+          "title": "Chair"
+        },
+        {
+          "title": "Vice-Chair"
+        },
+        {
+          "title": "Secretary"
+        }
+      ]
+    },
+    {
+      "title": "Old Business",
+      "type": "oldBusiness",
+      "hasSubsections": true,
+      "subsections": [
+        {
+          "title": "Website"
+        }
+      ]
+    },
+    {
+      "title": "New Business",
+      "type": "newBusiness",
+      "hasSubsections": true,
+      "subsections": [
+        {
+          "title": "Issues with parking"
+        },
+        {
+          "title": "Resolution MM-RES-2017-1: Amendment to More Clearly Define Roles of Executive Officers"
+        }
+      ]
+    },
+    {
+      "title": "Public Comment",
+      "type": "comment"
+    },
+    {
+      "title": "Adjournment",
+      "type": "adjourn"
+    }
+  ]
+}

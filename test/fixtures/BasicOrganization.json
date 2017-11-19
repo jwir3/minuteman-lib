@@ -1,5 +1,6 @@
 {
   "name": "Some Cool Organization",
+  "id": 1,
   "quorum": 0.60,
   "members": [
     {

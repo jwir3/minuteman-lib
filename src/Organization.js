@@ -1,10 +1,17 @@
 'use strict';
 
+import OrganizationRegistry from './OrganizationRegistry';
+
 export default class Organization {
-  constructor(aName, aQuorum) {
-    this.mName = aName;
-    this.quorum = aQuorum;
-    this.mMembers = [];
+  constructor(aSerializedData) {
+    if (aSerializedData) {
+      this.deserialize(aSerializedData);
+      OrganizationRegistry.insertOrganization(this);
+    }
+  }
+
+  get id() {
+    return this.mId;
   }
 
   get name() {
@@ -46,10 +53,10 @@ export default class Organization {
     this.members.push(aMember);
   }
 
-  static parse(jsonData) {
-    var obj = JSON.parse(jsonData);
-
-    var org = new Organization(obj.name, obj.quorum);
-    return org;
+  deserialize(aData) {
+    this.mId = aData.id;
+    this.mName = aData.name;
+    this.quorum = aData.quorum;
+    this.mMembers = [];
   }
 }
