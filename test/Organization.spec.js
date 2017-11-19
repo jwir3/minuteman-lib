@@ -43,7 +43,7 @@ describe ('Organization', () => {
       newOrg.should.exist;
 
       var member = null;
-      expect(() => { newOrg.addMember(member); }).to.throw('cannot add a null member to an organization');
+      expect(() => { newOrg.addMember(member); }).to.throw('Cannot add a null member to an organization');
 
       member = new Member(206, 'Betty Samson');
       newOrg.addMember(member);

@@ -43,5 +43,12 @@ describe('Agenda Deserialization', () => {
     agenda.organization.should.exist;
     agenda.organization.id.should.equal(org.id);
     agenda.organization.name.should.equal('Some Cool Organization');
+
+    let memberNames = agenda.expectedMemberNames;
+    expect('Scott Johnson' in memberNames).to.be.truthy;
+    expect('John Smith' in memberNames).to.be.truthy;
+    expect('Mike Anderson' in memberNames).to.be.truthy;
+    expect('Carol Stellen' in memberNames).to.be.truthy;
+    expect('Trish Calley' in memberNames).to.be.truthy;
   });
 });

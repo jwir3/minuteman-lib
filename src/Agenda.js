@@ -18,6 +18,24 @@ export default class Agenda {
     return this.scheduledStartTime.format('YYYY-MM-DD[T]HH:mm');
   }
 
+  get expectedMemberNames() {
+    let names = [];
+    for (var memberIdx in this.members) {
+      names.push(this.members[memberIdx].name);
+    }
+
+    return names;
+  }
+
+  _populateExpectedMembers(memberIds) {
+    this.members = [];
+    for (var idx in memberIds) {
+      let nextId = memberIds[idx];
+      let member = this.organization.getMemberById(nextId);
+      this.members[nextId] = member;
+    }
+  }
+
   deserialize(aData) {
     this.scheduledStartTime = moment(aData.scheduledStartTime);
     this.title = aData.title;
@@ -27,6 +45,8 @@ export default class Agenda {
       if (!this.organization) {
         throw "No organization found with id '" + aData.organizationId + "'";
       }
+
+      this._populateExpectedMembers(aData.expectedMembers);
     }
   }
 }

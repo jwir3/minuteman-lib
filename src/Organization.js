@@ -1,5 +1,6 @@
 'use strict';
 
+import Member from './Member';
 import OrganizationRegistry from './OrganizationRegistry';
 
 export default class Organization {
@@ -38,14 +39,25 @@ export default class Organization {
     return this.mMembers;
   }
 
-  addMember(aMember) {
-    if (!aMember) {
-      throw ('cannot add a null member to an organization');
+  getMemberById(id) {
+    for (let idx in this.members) {
+      let nextMember = this.members[idx];
+      if (nextMember.id === id) {
+        return nextMember;
+      }
     }
 
-    for (var idx in this.members) {
-      if (this.members[idx].equals(aMember)) {
-        // Do nothing, because this member is already added.
+    return null;
+  }
+
+  addMember(aMember) {
+    if (!aMember) {
+      throw ('Cannot add a null member to an organization');
+    }
+
+    for (let idx in this.members) {
+      if (this.members[idx].id === aMember.id) {
+        this.members[idx] = aMember;
         return;
       }
     }
@@ -58,5 +70,11 @@ export default class Organization {
     this.mName = aData.name;
     this.quorum = aData.quorum;
     this.mMembers = [];
+
+    for (let idx in aData.members) {
+      let memberObj = aData.members[idx];
+      let nextMember = new Member(memberObj.id, memberObj.name);
+      this.addMember(nextMember);
+    }
   }
 }
