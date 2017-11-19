@@ -1,5 +1,6 @@
 import { should, expect } from 'chai';
 import Agenda from '../src/Agenda';
+import Organization from '../src/Organization';
 import moment from 'moment';
 import { fixtures } from './FixtureHelper';
 
@@ -27,4 +28,20 @@ describe('Agenda Deserialization', () => {
       agenda.scheduledStartTimeAsString.should.equal('2017-07-20T19:00');
     }
   );
+
+  it ('should throw an exception if the organization id is not found in the registry',
+    () => {
+      expect(() => {var agenda = new Agenda(fixtures['AdvancedAgendaInvalidOrganization'].rawObject)})
+        .to.throw("No organization found with id '31'");
+    }
+  );
+
+  it ('should automatically load the organization if one is given', () => {
+    var org = new Organization(fixtures['BasicOrganization'].rawObject);
+    var agenda = new Agenda(fixtures['AdvancedAgenda'].rawObject);
+
+    agenda.organization.should.exist;
+    agenda.organization.id.should.equal(org.id);
+    agenda.organization.name.should.equal('Some Cool Organization');
+  });
 });

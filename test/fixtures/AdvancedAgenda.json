@@ -2,7 +2,7 @@
   "scheduledStartTime": "2017-07-20T19:00",
   "title": "Meeting of the Minds",
   "location": "123 Anywhere St. Rm 302, Rosemount, MN 55068",
-  "organization": 1,
+  "organizationId": 1,
   "expectedMembers": [0, 1, 2, 3, 4],
   "sections": [
     {

@@ -1,6 +1,7 @@
 'use strict';
 
 import moment from 'moment';
+import OrganizationRegistry from './OrganizationRegistry';
 
 export default class Agenda {
   constructor (aSerializedData) {
@@ -21,5 +22,11 @@ export default class Agenda {
     this.scheduledStartTime = moment(aData.scheduledStartTime);
     this.title = aData.title;
     this.location = aData.location;
+    if (aData.organizationId) {
+      this.organization = OrganizationRegistry.findById(aData.organizationId);
+      if (!this.organization) {
+        throw "No organization found with id '" + aData.organizationId + "'";
+      }
+    }
   }
 }
