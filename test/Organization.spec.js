@@ -1,4 +1,5 @@
 import { should, expect } from 'chai';
+import OfficerRole from '../src/OfficerRole';
 import Organization from '../src/Organization';
 import OrganizationRegistry from '../src/OrganizationRegistry';
 import Member from '../src/Member';
@@ -96,6 +97,40 @@ describe ('Organization', () => {
       org.id.should.equal(1);
       org.quorum.should.equal(0.6);
       org.name.should.equal('Some Cool Organization');
+    });
+  });
+
+  describe ('officer roles', () => {
+    it ('should populate an empty officer role using the default constructor', () => {
+      let officerRole = new OfficerRole();
+      officerRole.should.exist;
+      should().not.exist(officerRole.title);
+      should().not.exist(officerRole.holderId);
+    });
+
+    it ('should be populated from the JSON data of an organization', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+      org.should.exist;
+
+      let mem0 = org.getMemberById(0);
+      let officerRole0 = org.getOfficerRoleForMember(mem0);
+      officerRole0.should.exist;
+      officerRole0.title.should.equal('Vice Chairman');
+
+      let mem3 = org.getMemberById(3);
+      let officerRole3 = org.getOfficerRoleForMember(mem3);
+      officerRole3.should.exist;
+      officerRole3.title.should.equal('Chairman');
+    });
+
+    it ('should show member with id 3 as an officer', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+      org.should.exist;
+
+      let mem3 = org.getMemberById(3);
+      mem3.should.exist;
+      mem3.isOfficer().should.be.truthy;
+      mem3.getOfficerRole().title.should.equal('Chairman');
     });
   });
 });

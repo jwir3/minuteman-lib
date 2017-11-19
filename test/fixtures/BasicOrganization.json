@@ -26,19 +26,19 @@
   ],
   "officers": [
     {
-      "name": "Chairman",
+      "title": "Chairman",
       "holder": 3
     },
     {
-      "name": "Vice Chairman",
+      "title": "Vice Chairman",
       "holder": 0
     },
     {
-      "name": "Secretary",
+      "title": "Secretary",
       "holder": 1
     },
     {
-      "name": "Treasurer",
+      "title": "Treasurer",
       "holder": null
     }
   ]

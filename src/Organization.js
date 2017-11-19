@@ -1,6 +1,7 @@
 'use strict';
 
 import Member from './Member';
+import OfficerRole from './OfficerRole';
 import OrganizationRegistry from './OrganizationRegistry';
 
 export default class Organization {
@@ -39,10 +40,14 @@ export default class Organization {
     return this.mMembers;
   }
 
+  get officerRoles() {
+    return this.mOfficerRoles;
+  }
+
   getMemberById(id) {
     for (let idx in this.members) {
       let nextMember = this.members[idx];
-      if (nextMember.id === id) {
+      if (nextMember.id == id) {
         return nextMember;
       }
     }
@@ -50,10 +55,31 @@ export default class Organization {
     return null;
   }
 
+  getOfficerRoleForMember(aMember) {
+    if (!aMember) {
+      return null;
+    }
+
+    for (let idx in this.officerRoles) {
+      let officerRole = this.officerRoles[idx];
+      if (officerRole.holderId === aMember.id) {
+        return officerRole;
+      }
+    }
+
+    return null;
+  }
+
+  isOfficer(aMember) {
+    return getOfficerRoleForMember(aMember) !== null;
+  }
+
   addMember(aMember) {
     if (!aMember) {
       throw ('Cannot add a null member to an organization');
     }
+
+    aMember.organizationId = this.id;
 
     for (let idx in this.members) {
       if (this.members[idx].id === aMember.id) {
@@ -73,8 +99,18 @@ export default class Organization {
 
     for (let idx in aData.members) {
       let memberObj = aData.members[idx];
-      let nextMember = new Member(memberObj.id, memberObj.name);
+      let nextMember = new Member(memberObj);
       this.addMember(nextMember);
+    }
+
+    this._deserializeOfficerRoles(aData.officers);
+  }
+
+  _deserializeOfficerRoles(aOfficersArray) {
+    this.mOfficerRoles = [];
+    for (let idx in aOfficersArray) {
+      let nextOfficerObj = aOfficersArray[idx];
+      this.mOfficerRoles.push(new OfficerRole(this.id, nextOfficerObj));
     }
   }
 }
