@@ -1,9 +1,10 @@
 'use strict';
 
 export default class Member {
-  constructor (aId, aName) {
-    this.mId = aId;
-    this.mName = aName;
+  constructor (aSerializedData) {
+    if (aSerializedData) {
+      this._deserialize(aSerializedData);
+    }
   }
 
   get id() {
@@ -22,10 +23,8 @@ export default class Member {
     return this.name == aOther.name && this.id == aOther.id;
   }
 
-  static parse(jsonData) {
-    var obj = JSON.parse(jsonData);
-    var newObj = new Member(obj.id, obj.name);
-
-    return newObj;
+  _deserialize(aData) {
+    this.mId = aData.id;
+    this.mName = aData.name;
   }
 }

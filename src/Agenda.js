@@ -9,8 +9,8 @@ export default class Agenda {
     this.title = null;
     this.location = null;
 
-    if (aSerializedData != null) {
-      this.deserialize(aSerializedData);
+    if (aSerializedData) {
+      this._deserialize(aSerializedData);
     }
   }
 
@@ -21,7 +21,10 @@ export default class Agenda {
   get expectedMemberNames() {
     let names = [];
     for (var memberIdx in this.members) {
-      names.push(this.members[memberIdx].name);
+      let nextMember = this.members[memberIdx];
+      if (nextMember) {
+        names.push(nextMember.name);
+      }
     }
 
     return names;
@@ -36,7 +39,7 @@ export default class Agenda {
     }
   }
 
-  deserialize(aData) {
+  _deserialize(aData) {
     this.scheduledStartTime = moment(aData.scheduledStartTime);
     this.title = aData.title;
     this.location = aData.location;

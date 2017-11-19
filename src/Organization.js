@@ -6,7 +6,7 @@ import OrganizationRegistry from './OrganizationRegistry';
 export default class Organization {
   constructor(aSerializedData) {
     if (aSerializedData) {
-      this.deserialize(aSerializedData);
+      this._deserialize(aSerializedData);
       OrganizationRegistry.insertOrganization(this);
     }
   }
@@ -65,7 +65,7 @@ export default class Organization {
     this.members.push(aMember);
   }
 
-  deserialize(aData) {
+  _deserialize(aData) {
     this.mId = aData.id;
     this.mName = aData.name;
     this.quorum = aData.quorum;

@@ -45,16 +45,26 @@ describe ('Organization', () => {
       var member = null;
       expect(() => { newOrg.addMember(member); }).to.throw('Cannot add a null member to an organization');
 
-      member = new Member(206, 'Betty Samson');
+      member = new Member({
+        "id": 206,
+        "name": 'Betty Samson'
+      });
+
       newOrg.addMember(member);
       newOrg.members.length.should.equal(1);
       newOrg.members[0].should.equal(member);
 
-      var member2 = new Member(206, 'Betty Samson');
+      var member2 = new Member({
+        "id": 206,
+        "name": 'Betty Samson'
+      });
       newOrg.addMember(member2);
       newOrg.members.length.should.equal(1);
 
-      var member3 = new Member(207, 'John Jimbornal');
+      var member3 = new Member({
+        "id": 207,
+        "name": 'John Jimbornal'
+      });
       newOrg.addMember(member3);
       newOrg.members.length.should.equal(2);
     });

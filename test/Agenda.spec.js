@@ -7,7 +7,7 @@ import { fixtures } from './FixtureHelper';
 should();
 
 describe('Agenda Deserialization', () => {
-  it ('should create an agenda with a bunch of undefined members if no parameters passed to constructor',
+  it ('should create an agenda with no organization if no parameters passed to constructor',
       () => {
         var agenda = new Agenda();
 
