@@ -1,9 +1,12 @@
 'use strict';
 
+import OrganizationRegistry from './OrganizationRegistry';
+
 export default class Member {
-  constructor (aId, aName) {
-    this.mId = aId;
-    this.mName = aName;
+  constructor (aSerializedData) {
+    if (aSerializedData) {
+      this._deserialize(aSerializedData);
+    }
   }
 
   get id() {
@@ -14,6 +17,34 @@ export default class Member {
     return this.mName;
   }
 
+  get organizationId() {
+    return this.mOrganizationId;
+  }
+
+  set organizationId(id) {
+    this.mOrganizationId = id;
+  }
+
+  get organization() {
+    if (!this.organizationId) {
+      return null;
+    }
+
+    return OrganizationRegistry.findById(this.organizationId);
+  }
+
+  getOfficerRole() {
+    if (!this.organization) {
+      return null;
+    }
+
+    return this.organization.getOfficerRoleForMember(this);
+  }
+
+  isOfficer() {
+    return this.getOfficerRole() != null;
+  }
+
   equals(aOther) {
     if (!(aOther instanceof Member)) {
       return false;
@@ -22,10 +53,8 @@ export default class Member {
     return this.name == aOther.name && this.id == aOther.id;
   }
 
-  static parse(jsonData) {
-    var obj = JSON.parse(jsonData);
-    var newObj = new Member(obj.id, obj.name);
-
-    return newObj;
+  _deserialize(aData) {
+    this.mId = aData.id;
+    this.mName = aData.name;
   }
 }

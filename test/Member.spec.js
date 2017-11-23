@@ -8,15 +8,15 @@ should();
 
 describe ('Members', () => {
   it ('should be constructable', () => {
-    var mem = new Member(1, 'Pooh Bear');
+    var mem = new Member({
+      "id": 1,
+      "name": 'Pooh Bear'
+    });
     mem.should.exist;
   });
 
   it ('should have a name and id', () => {
-    var memberObj = fixtures['BasicMember'];
-    memberObj.should.exist;
-
-    var member = Member.parse(memberObj.json);
+    var member = new Member(fixtures['BasicMember'].rawObject);
 
     member.should.exist;
     member.id.should.equal(0);
@@ -24,9 +24,9 @@ describe ('Members', () => {
   });
 
   it ('should have an equals method that determines if two members are equivalent', () => {
-    var member1 = Member.parse(fixtures['BasicMember'].json);
-    var member2 = Member.parse(fixtures['BasicMember'].json);
-    var member3 = Member.parse(fixtures['OfficerMember'].json);
+    var member1 = new Member(fixtures['BasicMember'].rawObject);
+    var member2 = new Member(fixtures['BasicMember'].rawObject);
+    var member3 = new Member(fixtures['OfficerMember'].rawObject);
 
     member1.equals(member1).should.be.true;
     member1.equals(member2).should.be.true;

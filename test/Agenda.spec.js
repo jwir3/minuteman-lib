@@ -1,12 +1,13 @@
 import { should, expect } from 'chai';
 import Agenda from '../src/Agenda';
+import Organization from '../src/Organization';
 import moment from 'moment';
 import { fixtures } from './FixtureHelper';
 
 should();
 
 describe('Agenda Deserialization', () => {
-  it ('should create an agenda with a bunch of undefined members if no parameters passed to constructor',
+  it ('should create an agenda with no organization if no parameters passed to constructor',
       () => {
         var agenda = new Agenda();
 
@@ -27,4 +28,27 @@ describe('Agenda Deserialization', () => {
       agenda.scheduledStartTimeAsString.should.equal('2017-07-20T19:00');
     }
   );
+
+  it ('should throw an exception if the organization id is not found in the registry',
+    () => {
+      expect(() => {var agenda = new Agenda(fixtures['AdvancedAgendaInvalidOrganization'].rawObject)})
+        .to.throw("No organization found with id '31'");
+    }
+  );
+
+  it ('should automatically load the organization if one is given', () => {
+    var org = new Organization(fixtures['BasicOrganization'].rawObject);
+    var agenda = new Agenda(fixtures['AdvancedAgenda'].rawObject);
+
+    agenda.organization.should.exist;
+    agenda.organization.id.should.equal(org.id);
+    agenda.organization.name.should.equal('Some Cool Organization');
+
+    let memberNames = agenda.expectedMemberNames;
+    expect('Scott Johnson' in memberNames).to.be.truthy;
+    expect('John Smith' in memberNames).to.be.truthy;
+    expect('Mike Anderson' in memberNames).to.be.truthy;
+    expect('Carol Stellen' in memberNames).to.be.truthy;
+    expect('Trish Calley' in memberNames).to.be.truthy;
+  });
 });
