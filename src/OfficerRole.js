@@ -9,6 +9,17 @@ export default class OfficerRole {
     }
   }
 
+  asJSON() {
+    return this._serialize();
+  }
+
+  _serialize() {
+    return {
+      "title": this.title,
+      "holder": this.holderId
+    }
+  }
+
   _deserialize(aData) {
     this.holderId = aData.holder;
     this.title = aData.title;

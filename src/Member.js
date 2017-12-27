@@ -33,6 +33,10 @@ export default class Member {
     return OrganizationRegistry.findById(this.organizationId);
   }
 
+  asJSON() {
+    return this._serialize();
+  }
+
   getOfficerRole() {
     if (!this.organization) {
       return null;
@@ -51,6 +55,13 @@ export default class Member {
     }
 
     return this.name == aOther.name && this.id == aOther.id;
+  }
+
+  _serialize() {
+    return {
+      "id": this.mId,
+      "name": this.mName
+    }
   }
 
   _deserialize(aData) {

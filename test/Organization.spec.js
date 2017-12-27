@@ -5,7 +5,7 @@ import OrganizationRegistry from '../src/OrganizationRegistry';
 import Member from '../src/Member';
 // import { Member, Organization } from '../dist/minuteman-lib';
 import moment from 'moment';
-import {fixtures} from './FixtureHelper';
+import { fixtures } from './FixtureHelper';
 
 should();
 
@@ -69,6 +69,13 @@ describe ('Organization', () => {
       newOrg.addMember(member3);
       newOrg.members.length.should.equal(2);
     });
+
+    it ('should return null if a userId that is not in the organization is queried for', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+
+      org.should.exist;
+      should().not.exist(org.getMemberById(817271));
+    });
   });
 
   describe ('fixture data', () => {
@@ -78,9 +85,22 @@ describe ('Organization', () => {
       org.quorum.should.equal(0.6);
       org.id.should.equal(1);
     });
+
+    it ('should show parsed organizations that are reserialized as equivalent', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+      org.asJSON().should.deep.equal(fixtures['BasicOrganization'].rawObject);
+    });
+
+    it ('should show copied organizations as being deeply equal but not exactly equal', () => {
+      var org1 = new Organization(fixtures['BasicOrganization'].rawObject);
+      var org2 = Organization.copy(org1);
+
+      org1.should.not.equal(org2);
+      org1.asJSON().should.deep.equal(org2.asJSON());
+    });
   });
 
-  describe ('organization registry', () => {
+  describe ('registry', () => {
     it ('should not return a null organization if an unregistered id is given', () => {
       var org = OrganizationRegistry.findById(36);
 
@@ -97,6 +117,15 @@ describe ('Organization', () => {
       org.id.should.equal(1);
       org.quorum.should.equal(0.6);
       org.name.should.equal('Some Cool Organization');
+    });
+
+    it ('should show one organization having been added to the registry after loading all organization fixtures', () => {
+      OrganizationRegistry.clear();
+
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+
+      org.should.exist;
+      OrganizationRegistry.getAllOrganizations().length.should.equal(1);
     });
   });
 
@@ -130,7 +159,26 @@ describe ('Organization', () => {
       let mem3 = org.getMemberById(3);
       mem3.should.exist;
       mem3.isOfficer().should.be.truthy;
+      org.isOfficer(mem3).should.be.truthy;
       mem3.getOfficerRole().title.should.equal('Chairman');
+    });
+
+    it ('should return null for an officer role retrieval if the user passed in is null', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+      org.should.exist;
+
+      should().not.exist(org.getOfficerRoleForMember(null));
+    });
+
+    it ('should return null as an officer role for member with id 4 because she is not an officer', () => {
+      var org = new Organization(fixtures['BasicOrganization'].rawObject);
+      org.should.exist;
+
+      var trish = org.getMemberById(4);
+      trish.should.exist;
+
+      should().not.exist(org.getOfficerRoleForMember(trish));
+      org.isOfficer(trish).should.be.false;
     });
   });
 });

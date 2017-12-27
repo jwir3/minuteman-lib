@@ -71,7 +71,13 @@ export default class Organization {
   }
 
   isOfficer(aMember) {
-    return getOfficerRoleForMember(aMember) !== null;
+    for (let officerRole of this.officerRoles) {
+      if (aMember.id === officerRole.holderId) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   addMember(aMember) {
@@ -89,6 +95,34 @@ export default class Organization {
     }
 
     this.members.push(aMember);
+  }
+
+  asJSON() {
+    return this._serialize();
+  }
+
+  _serialize() {
+    let members = [];
+    for (let m of this.mMembers) {
+      members.push(m.asJSON());
+    }
+
+    let officerRoles = [];
+    for (let role of this.mOfficerRoles) {
+      officerRoles.push(role.asJSON());
+    }
+
+    return {
+      "name": this.mName,
+      "id": this.mId,
+      "quorum": this.mQuorum,
+      "officers": officerRoles,
+      "members": members
+    }
+  }
+
+  static copy(aOrganization) {
+    return new Organization(aOrganization.asJSON());
   }
 
   _deserialize(aData) {
