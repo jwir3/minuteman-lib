@@ -13,19 +13,20 @@ export default class OrganizationRegistry {
     this.orgs[org.id] = org;
   }
 
-  static insertOrganization(org) {
+  static getInstance() {
     if (!OrganizationRegistry._instance) {
       OrganizationRegistry._instance = new OrganizationRegistry();
     }
 
-    OrganizationRegistry._instance.storeOrganization(org);
+    return OrganizationRegistry._instance;
+  }
+
+  static insertOrganization(org) {
+
+    OrganizationRegistry.getInstance().storeOrganization(org);
   }
 
   static findById(id) {
-    if (!OrganizationRegistry._instance) {
-      OrganizationRegistry._instance = new OrganizationRegistry();
-    }
-
-    return OrganizationRegistry._instance.getOrganizationById(id);
+    return OrganizationRegistry.getInstance().getOrganizationById(id);
   }
 }
