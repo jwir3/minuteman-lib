@@ -1,4 +1,4 @@
-# minuteman-lib
+# tricorne
 Library of common functionality for Minuteman
 
 ## Building
@@ -23,5 +23,5 @@ Library of common functionality for Minuteman
 ## Usage
 ```javascript
   // Import whatever classes you want
-  import { Member } from 'minuteman-lib';
+  import { Member } from 'tricorne';
 ```
